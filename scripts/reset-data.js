@@ -1,5 +1,5 @@
-import fs from "fs"
-import faker from "faker"
+const fs = require("fs")
+const faker = require("faker")
 
 const users = Array.from(Array(20)).map(() => ({
   id: faker.random.uuid(),
@@ -28,7 +28,7 @@ const statuses = [
 
 const tasks = Array.from(Array(100)).map(() => ({
   id: faker.random.uuid(),
-  title: faker.name.title(),
+  title: faker.hacker.phrase(),
   description: faker.lorem.paragraphs(),
   status: statuses[Math.floor(Math.random() * statuses.length)].id,
 }))
