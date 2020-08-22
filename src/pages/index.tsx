@@ -1,5 +1,7 @@
+import { Text } from "@chakra-ui/core"
+
 function Component() {
-  return <div>hello</div>
+  return <Text>Hello, world</Text>
 }
 
 export default Component
