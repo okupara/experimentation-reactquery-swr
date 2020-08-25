@@ -1,11 +1,28 @@
-import type { Id } from "./Id"
-import type { Model as UserModel } from "./User"
-import type { Model as StatusModel } from "./Status"
+import type { IdType, StringIdType } from "./Id"
+import type { Model as User } from "./User"
+import type { Model as Status } from "./Status"
 
-export type Model = {
-  id: Id<"task", string>
+type BasicUser = { id: User["id"] }
+type BasicStatus = { id: Status["id"] }
+
+export type Id = IdType<"task", string>
+export function Id(value: string): Id {
+  return { type: "task", value }
+}
+
+export type Model<U extends BasicUser, S extends BasicStatus> = {
+  id: Id
   title: string
   description: string
-  // status: StatusModel["id"]
-  // assignees: ReadonlyArray<UserModel>
+  status: S
+  assignees: ReadonlyArray<U>
 }
+
+export type JSONModel = Omit<
+  Model<BasicUser, BasicStatus>,
+  "id" | "statuses" | "assignees"
+> &
+  StringIdType & {
+    status: string
+    assignees: ReadonlyArray<string>
+  }

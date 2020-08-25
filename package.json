@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "next dev -p 5000",
     "dev:api": "json-server -p 5001 db.json",
-    "reset:db": "NODE_ENV=test babel-node ./scripts/reset-data.js"
+    "reset:db": "NODE_ENV=test node ./scripts/reset-data.js"
   },
   "dependencies": {
     "@chakra-ui/core": "^1.0.0-rc.2",

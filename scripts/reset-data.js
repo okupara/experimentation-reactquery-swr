@@ -3,7 +3,7 @@ const faker = require("faker")
 
 const users = Array.from(Array(20)).map(() => ({
   id: faker.random.uuid(),
-  name: `${faker.name.firstName} ${faker.name.lastName}`,
+  name: `${faker.name.firstName()} ${faker.name.lastName()}`,
   email: faker.internet.email(),
 }))
 
@@ -31,6 +31,8 @@ const tasks = Array.from(Array(100)).map(() => ({
   title: faker.hacker.phrase(),
   description: faker.lorem.paragraphs(),
   status: statuses[Math.floor(Math.random() * statuses.length)].id,
+  assignees:
+    Math.random() > 0.6 ? [users[Math.floor(Math.random() * users.length)].id] : [],
 }))
 
 fs.promises

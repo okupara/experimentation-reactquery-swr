@@ -1,19 +1,24 @@
 import * as React from "react"
-import { VStack, Text, Box } from "@chakra-ui/core"
+import { VStack, Text, Box, Flex, Badge } from "@chakra-ui/core"
 import { Header } from "../../components/Header"
-import { useRqTasks } from "./useRqTasks"
+import { useTaskWithRq } from "./useTasksWithRq"
 
 function Component() {
-  const { isLoading, data } = useRqTasks()
+  const { isLoading, data } = useTaskWithRq()
   return (
     <>
       <Header />
       <Box pt={24}>
         {isLoading && <Text>Loading...</Text>}
         {!isLoading && (
-          <VStack>
+          <VStack maxWidth="800px">
             {data.map((item) => (
-              <Box>{item.title}</Box>
+              <Flex>
+                <Text>{item.title}</Text>
+                <Box>
+                  <Badge></Badge>
+                </Box>
+              </Flex>
             ))}
           </VStack>
         )}
