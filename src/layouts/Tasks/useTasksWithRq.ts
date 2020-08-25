@@ -27,7 +27,6 @@ export function useTaskWithRq() {
   // To use Promise.All and cache them in one place would be better, but you know, it's a experimentation.
   const isLoading = isTasksLoading || isStatusesLoading || isUserLoading
 
-  //test
   const mergedData = useMemoIf<ReadonlyArray<TaskModel>>(isLoading === false, () =>
     tasks.map<TaskModel>((item) => {
       const status = getStatusById(item.status)
