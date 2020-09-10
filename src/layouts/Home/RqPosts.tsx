@@ -49,6 +49,9 @@ export function RqPost({ id }: RqPostProps) {
         </Link>
       </Box>
       <Box>
+        <Text>count:{postInfo.count}</Text>
+      </Box>
+      <Box>
         {postInfo.isLoading && <Spinner />}
         {postInfo.data && (
           <>
