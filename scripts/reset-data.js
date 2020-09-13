@@ -11,18 +11,22 @@ const statuses = [
   {
     id: faker.random.uuid(),
     title: "None",
+    color: "red",
   },
   {
     id: faker.random.uuid(),
     title: "In progress",
+    color: "orange",
   },
   {
     id: faker.random.uuid(),
     title: "Review",
+    color: "green",
   },
   {
     id: faker.random.uuid(),
     title: "Done",
+    color: "gray",
   },
 ]
 

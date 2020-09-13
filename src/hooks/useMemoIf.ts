@@ -1,6 +1,6 @@
 import { useMemo, useRef } from "react"
 
-export function useMemoIf<T>(condition: boolean, fn: () => T): T {
+export function useMemoIf<T>(condition: boolean, fn: () => T): T | undefined {
   const refValue = useRef<T>()
 
   return useMemo(() => {

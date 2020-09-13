@@ -3,6 +3,7 @@ import { IdType } from "./Id"
 export type Model = {
   id: Id
   title: string
+  color: string
 }
 export type Id = IdType<"status", string>
 export function Id(value: string): Id {

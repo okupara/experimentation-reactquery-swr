@@ -13,14 +13,14 @@ export function useRqFetchMaster<T extends { id: string }>(
     fetch(props.url).then((r) => r.json()),
   )
 
-  const IdIndexMap = data
+  const idIndexMap: Record<string, number> | null = data
     ? data.reduce((p, c, i) => ({ ...p, [c.id]: i }), {})
     : null
 
   const getRecordById = useCallback(
-    (id: string): T => {
-      if (!data) return null
-      const result = data[IdIndexMap[id]]
+    (id: string): T | null => {
+      if (!data || !idIndexMap) return null
+      const result = data[idIndexMap[id]]
       return result ? result : null
     },
     [data],
