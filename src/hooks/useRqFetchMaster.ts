@@ -9,7 +9,7 @@ type UseRqFetchMasterProps = {
 export function useRqFetchMaster<T extends { id: string }>(
   props: UseRqFetchMasterProps,
 ) {
-  const { isLoading, data } = useQuery<ReadonlyArray<T>>(props.cacheKey, () =>
+  const { isLoading, data } = useQuery<readonly T[]>(props.cacheKey, () =>
     fetch(props.url).then((r) => r.json()),
   )
 

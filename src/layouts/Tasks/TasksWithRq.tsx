@@ -1,13 +1,15 @@
 import * as React from "react"
 import { VStack, Text, Box, Flex, Badge } from "@chakra-ui/core"
 import { Header } from "../../components/Header"
-import { useTaskWithRq } from "./useTasksWithRq"
+import { useTaskWithRq, UseTaskWithRQProps } from "./useTasksWithRq"
 import { BadgeBox } from "../../components/BadgeBox"
-import { Clickable } from "../../components/Clickable"
+import { TaskDrawer } from "../../layouts/Tasks/TaskDrawer"
+import { TaskDetail } from "../../layouts/Tasks/TaskDetail"
+import { useRouter } from "next/router"
 
-function Component() {
-  const { isLoading, data } = useTaskWithRq()
-  console.log(data)
+function Component(props: UseTaskWithRQProps) {
+  const { isLoading, data, isDetailOpen, selectedId } = useTaskWithRq(props)
+
   return (
     <>
       <Header />
@@ -17,11 +19,7 @@ function Component() {
           <VStack maxWidth="800px" alignItems="flex-start" m="0 auto" w="80%">
             {data?.map((item) => (
               <Flex key={item.id.value} w="100%" justifyContent="space-between">
-                <ClickableFlex
-                  onClick={() => {
-                    console.log(item.id.value)
-                  }}
-                >
+                <Row id={item.id.value}>
                   <Text
                     overflow="hidden"
                     whiteSpace="nowrap"
@@ -29,17 +27,22 @@ function Component() {
                   >
                     {item.title}
                   </Text>
-                </ClickableFlex>
+                </Row>
                 <Box>
-                  <BadgeBox colorScheme={item.status.color} w={32} py={2}>
-                    {item.status.title}
-                  </BadgeBox>
+                  {item.status && (
+                    <BadgeBox colorScheme={item.status.color} w={32} py={2}>
+                      {item.status.title}
+                    </BadgeBox>
+                  )}
                 </Box>
               </Flex>
             ))}
           </VStack>
         )}
       </Box>
+      <TaskDrawer isOpen={isDetailOpen}>
+        {selectedId && <TaskDetail id={selectedId as string} />}
+      </TaskDrawer>
     </>
   )
 }
@@ -56,5 +59,16 @@ const ClickableFlex: React.FC<ClickableFlexProps> = ({ children, onClick }) => (
     {children}
   </Flex>
 )
+
+type RowProps = {
+  id: string
+}
+const Row: React.FC<RowProps> = ({ id, children }) => {
+  const router = useRouter()
+  const onClick = React.useCallback(() => {
+    router.push(`/rq/?id=${id}`)
+  }, [])
+  return <ClickableFlex onClick={onClick}>{children}</ClickableFlex>
+}
 
 export const RqTasks = React.memo(Component)

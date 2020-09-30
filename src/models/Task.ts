@@ -10,11 +10,11 @@ export function Id(value: string): Id {
   return { type: "task", value }
 }
 
-export type Model<U extends BasicUser, S extends BasicStatus> = {
+export type Model<U extends BasicUser, S extends BasicStatus | null> = {
   id: Id
   title: string
   description: string
-  status: S
+  status: S | null
   assignees: ReadonlyArray<U>
 }
 

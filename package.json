@@ -17,6 +17,7 @@
     "@chakra-ui/theme": "^1.0.0-rc.3",
     "@chakra-ui/theme-tools": "^1.0.0-rc.3",
     "@chakra-ui/utils": "^1.0.0-rc.3",
+    "fp-ts": "^2.8.2",
     "next": "^9.5.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

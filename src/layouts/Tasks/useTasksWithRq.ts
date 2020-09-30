@@ -1,3 +1,5 @@
+import { useEffect, useCallback } from "react"
+import { useRouter } from "next/router"
 import { useFetchTasks } from "../../hooks/useRqTasks"
 import { useFetchStatuses } from "../../hooks/useRqStatuses"
 import { useFetchUsers } from "../../hooks/useRqUser"
@@ -5,13 +7,15 @@ import { useMemoIf } from "../../hooks/useMemoIf"
 import * as Status from "../../models/Status"
 import * as User from "../../models/User"
 import * as Task from "../../models/Task"
+import { useDisclosure } from "@chakra-ui/hooks"
 
 type TaskStatus = Pick<Status.Model, "id" | "title" | "color">
 type TaskUser = Pick<User.Model, "id" | "name">
 export type TaskModel = Omit<Task.Model<TaskUser, TaskStatus>, "description">
 
 export type ReturnUseTasksWithRq = ReturnType<typeof useTaskWithRq>
-export function useTaskWithRq() {
+export type UseTaskWithRQProps = { id: string | null }
+export function useTaskWithRq(props: UseTaskWithRQProps) {
   const { isLoading: isTasksLoading, data: tasks } = useFetchTasks()
   const {
     isLoading: isStatusesLoading,
@@ -55,9 +59,23 @@ export function useTaskWithRq() {
     },
   )
 
+  const { isOpen, onClose, onOpen } = useDisclosure()
+  const router = useRouter()
+  useEffect(() => {
+    if (router.query.id) {
+      onOpen()
+    } else {
+      if (isOpen) {
+        onClose()
+      }
+    }
+  }, [router.query.id, isOpen])
+
   return {
     isLoading,
     data: mergedData,
+    isDetailOpen: isOpen,
+    selectedId: router.query.id,
   }
 }
 

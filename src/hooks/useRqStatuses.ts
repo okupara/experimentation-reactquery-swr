@@ -1,5 +1,5 @@
 import { useRqFetchMaster } from "./useRqFetchMaster"
-import type { JSONModel } from "../models/Status"
+import type { JSONModel, Model } from "../models/Status"
 import { useMemoIf } from "../hooks/useMemoIf"
 
 export function useFetchStatuses() {
@@ -7,7 +7,6 @@ export function useFetchStatuses() {
     cacheKey: "statuses",
     url: "http://localhost:5001/statuses",
   })
-  console.log("status", statusInfo)
 
   const defaultStatus = useMemoIf(!!statusInfo.data, () => statusInfo.data![0])
 
