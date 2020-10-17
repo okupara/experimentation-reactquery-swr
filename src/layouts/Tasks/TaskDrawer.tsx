@@ -20,7 +20,7 @@ function Component({ isOpen, children }: Props) {
   return (
     <Drawer isOpen={isOpen} onClose={onClose}>
       {/* <DrawerOverlay /> */}
-      <DrawerContent pt={16} zIndex={100}>
+      <DrawerContent pt={10} zIndex={100} maxW="30rem">
         <DrawerCloseButton />
         <DrawerBody>
           {/* <Flex flexDir="column">
