@@ -1,12 +1,26 @@
-import { useQuery } from "react-query"
+import { useQuery, queryCache } from "react-query"
 import * as Task from "../../models/Task"
 import * as User from "../../models/User"
 import * as Status from "../../models/Status"
-import { useFetchUsers } from "../../hooks/useRqUser"
-import { useFetchStatuses } from "../../hooks/useRqStatuses"
+import { useFetchUsers, prefetchUsers } from "../../hooks/useRqUser"
+import { useFetchStatuses, prefetchStatuses } from "../../hooks/useRqStatuses"
 
 export type TaskDetailUser = Pick<User.Model, "id" | "name">
 export type TaskDetail = Task.Model<TaskDetailUser, Status.Model>
+
+export function preFetch(id: string) {
+  prefetchUsers()
+  prefetchStatuses()
+  const result = createFetchTaskDetail(id)
+  queryCache.prefetchQuery(result.key, result.fetcher, {
+    staleTime: 10000,
+  })
+}
+const createFetchTaskDetail = (id: string) => ({
+  key: ["task", id],
+  fetcher: () =>
+    fetch(`http://localhost:5001/tasks/${id}`).then<Task.JSONModel>((r) => r.json()),
+})
 
 export function useTaskDetail(id: string) {
   const { getRecordById: getUserById, collectUsers } = useFetchUsers()

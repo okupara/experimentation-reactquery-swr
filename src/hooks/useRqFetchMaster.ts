@@ -1,5 +1,5 @@
 import { useCallback } from "react"
-import { useQuery } from "react-query"
+import { useQuery, queryCache } from "react-query"
 
 type UseRqFetchMasterProps = {
   cacheKey: string
@@ -31,4 +31,17 @@ export function useRqFetchMaster<T extends { id: string }>(
     data,
     getRecordById,
   }
+}
+
+type PrefetchMasterProps = UseRqFetchMasterProps & {
+  staleTime?: number
+}
+
+export function prefetchMaster({ staleTime, ...props }: PrefetchMasterProps) {
+  const option = typeof staleTime === "undefined" ? {} : { staleTime }
+  queryCache.prefetchQuery(
+    props.cacheKey,
+    () => fetch(props.url).then((r) => r.json()),
+    option,
+  )
 }

@@ -1,6 +1,18 @@
-import { useRqFetchMaster } from "./useRqFetchMaster"
+import { useRqFetchMaster, prefetchMaster } from "./useRqFetchMaster"
 import type { JSONModel, Model } from "../models/Status"
 import { useMemoIf } from "../hooks/useMemoIf"
+
+const CACHE_KEY = "statuses"
+const URL = "http://localhost:5001/statuses"
+
+export function prefetchStatuses() {
+  console.log("PREFETCH STATUS")
+  prefetchMaster({
+    cacheKey: CACHE_KEY,
+    url: URL,
+    staleTime: 10000,
+  })
+}
 
 export function useFetchStatuses() {
   const statusInfo = useRqFetchMaster<JSONModel>({

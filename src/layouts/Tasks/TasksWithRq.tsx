@@ -2,6 +2,7 @@ import * as React from "react"
 import { VStack, Text, Box, Flex, Badge } from "@chakra-ui/core"
 import { Header } from "../../components/Header"
 import { useTaskWithRq, UseTaskWithRQProps } from "./useTasksWithRq"
+import { preFetch } from "./useTaskDetail"
 import { BadgeBox } from "../../components/BadgeBox"
 import { TaskDrawer } from "../../layouts/Tasks/TaskDrawer"
 import { TaskDetail } from "../../layouts/Tasks/TaskDetail"
@@ -47,14 +48,23 @@ function Component(props: UseTaskWithRQProps) {
   )
 }
 
-type ClickableFlexProps = { onClick?: () => void }
-const ClickableFlex: React.FC<ClickableFlexProps> = ({ children, onClick }) => (
+type ClickableFlexProps = {
+  onClick?: () => void
+  onMouseEnter?: () => void
+}
+
+const ClickableFlex: React.FC<ClickableFlexProps> = ({
+  children,
+  onClick,
+  onMouseEnter,
+}) => (
   <Flex
     alignItems="center"
     overflow="hidden"
     width="100%"
     cursor="pointer"
     onClick={onClick}
+    onMouseEnter={onMouseEnter}
   >
     {children}
   </Flex>
@@ -68,7 +78,14 @@ const Row: React.FC<RowProps> = ({ id, children }) => {
   const onClick = React.useCallback(() => {
     router.push(`/rq/?id=${id}`)
   }, [])
-  return <ClickableFlex onClick={onClick}>{children}</ClickableFlex>
+  const onMouseEnter = React.useCallback(() => {
+    preFetch(id)
+  }, [])
+  return (
+    <ClickableFlex onMouseEnter={onMouseEnter} onClick={onClick}>
+      {children}
+    </ClickableFlex>
+  )
 }
 
 export const RqTasks = React.memo(Component)
