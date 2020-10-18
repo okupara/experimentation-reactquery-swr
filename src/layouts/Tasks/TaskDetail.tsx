@@ -9,18 +9,18 @@ type Props = {
 }
 
 function Component({ id }: Props) {
-  const { data, isLoading } = useTaskDetail(id)
-  if (!data || isLoading) {
+  const { taskDetail, isLoading } = useTaskDetail(id)
+  if (!taskDetail || isLoading) {
     return <Box>Loading...</Box>
   }
 
   return (
     <VStack>
-      {data.status && (
+      {taskDetail.status && (
         <Flex w="100%" justifyContent="space-between">
           <Box>
-            <BadgeBox w={32} py={2} colorScheme={data.status?.color}>
-              {data.status?.title}
+            <BadgeBox w={32} py={2} colorScheme={taskDetail.status?.color}>
+              {taskDetail.status?.title}
             </BadgeBox>
           </Box>
           <Box>
@@ -30,11 +30,11 @@ function Component({ id }: Props) {
       )}
       <Box pt={5}>
         <Text fontSize="xl" fontWeight="bold">
-          {data.title}
+          {taskDetail.title}
         </Text>
       </Box>
       <Box pt={4}>
-        <Text>{data.description}</Text>
+        <Text>{taskDetail.description}</Text>
       </Box>
     </VStack>
   )

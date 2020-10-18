@@ -6,7 +6,6 @@ const CACHE_KEY = "statuses"
 const URL = "http://localhost:5001/statuses"
 
 export function prefetchStatuses() {
-  console.log("PREFETCH STATUS")
   prefetchMaster({
     cacheKey: CACHE_KEY,
     url: URL,

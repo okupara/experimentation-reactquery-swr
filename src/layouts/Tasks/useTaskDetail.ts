@@ -1,3 +1,4 @@
+import * as React from "react"
 import { useQuery, queryCache } from "react-query"
 import * as Task from "../../models/Task"
 import * as User from "../../models/User"
@@ -23,25 +24,36 @@ const createFetchTaskDetail = (id: string) => ({
 })
 
 export function useTaskDetail(id: string) {
-  const { getRecordById: getUserById, collectUsers } = useFetchUsers()
-  const { getRecordById: getStatusById } = useFetchStatuses()
+  const {
+    getRecordById: getUserById,
+    data: userData,
+    collectUsers,
+  } = useFetchUsers()
+  const { getRecordById: getStatusById, data: statusData } = useFetchStatuses()
 
   const taskQueryInfo = useQuery(["task", id], () =>
     new Promise((res) => setTimeout(res, 1000))
       .then(() => fetch(`http://localhost:5001/tasks/${id}`))
-      .then<Task.JSONModel>((r) => r.json())
-      .then<TaskDetail>((data) => {
-        const status = getStatusById(data.status)
-        const assignees = collectUsers(data.assignees)
-
-        return {
-          id: Task.Id(data.id),
-          title: data.title,
-          description: data.description,
-          status: status ? { ...status, id: Status.Id(status.id) } : null,
-          assignees: assignees.map((u) => ({ ...u, id: User.Id(u.id) })),
-        }
-      }),
+      .then<Task.JSONModel>((r) => r.json()),
   )
-  return taskQueryInfo
+
+  const taskDetail = React.useMemo<TaskDetail | null>(() => {
+    const { data } = taskQueryInfo
+    if (!data || !userData || !statusData) {
+      return null
+    }
+
+    const status = getStatusById(data.status)
+    const assignees = collectUsers(data.assignees)
+
+    return {
+      id: Task.Id(data.id),
+      title: data.title,
+      description: data.description,
+      status: status ? { ...status, id: Status.Id(status.id) } : null,
+      assignees: assignees.map((u) => ({ ...u, id: User.Id(u.id) })),
+    }
+  }, [taskQueryInfo.data, userData, statusData])
+
+  return { ...taskQueryInfo, taskDetail }
 }
