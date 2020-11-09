@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from "react"
+import { useEffect, useCallback, useState } from "react"
 import { useRouter } from "next/router"
 import { useFetchTasks } from "../../hooks/useRqTasks"
 import { useFetchStatuses } from "../../hooks/useRqStatuses"
@@ -59,6 +59,8 @@ export function useTaskWithRq(props: UseTaskWithRQProps) {
     },
   )
 
+  const editingState = useHoldingId()
+
   const { isOpen, onClose, onOpen } = useDisclosure()
   const router = useRouter()
   useEffect(() => {
@@ -76,10 +78,29 @@ export function useTaskWithRq(props: UseTaskWithRQProps) {
     data: mergedData,
     isDetailOpen: isOpen,
     selectedId: router.query.id,
+    editingState,
   }
 }
 
 type DetermineStatusParams = {
   target: Status.JSONModel | null
   defaultStatus: Status.JSONModel
+}
+
+function useHoldingId() {
+  const [activeId, setState] = useState<string | null>(null)
+
+  const reset = useCallback(() => {
+    setState(null)
+  }, [])
+
+  const setActiveId = useCallback((id: string) => {
+    setState(id)
+  }, [])
+
+  return {
+    activeId,
+    reset,
+    setActiveId,
+  }
 }

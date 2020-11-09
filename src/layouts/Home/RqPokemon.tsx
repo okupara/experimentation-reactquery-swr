@@ -31,7 +31,6 @@ function RqPokemonList(props: Props) {
 
 function RqBerries(props: Props) {
   const queryInfo = useRqBerries({ cacheKey: props.cacheKey })
-  console.log("berries:", queryInfo)
   return queryInfo.isLoading ? (
     <chakra.div>Loading...</chakra.div>
   ) : queryInfo.isError ? (

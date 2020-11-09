@@ -51,7 +51,6 @@ export function useSearchPokemon({ pokemon }: UseSearchPokemonProps) {
       retryDelay: 1000,
     },
   )
-  console.log("test", r)
   return r
 }
 
