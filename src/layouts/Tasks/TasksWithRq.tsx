@@ -8,7 +8,13 @@ import { TaskDrawer } from "../../layouts/Tasks/TaskDrawer"
 import { TaskDetail } from "../../layouts/Tasks/TaskDetail"
 import { useRouter } from "next/router"
 import * as Item from "./TaskListItem"
-import { Hovering } from "./InlineEdit/InlineEdit"
+import {
+  InlineEdit,
+  InlineEditUneditable,
+  InlineEditHoverArea,
+  InlineEditEditable,
+  InlineEditHovering,
+} from "../../components/InlineEdit"
 
 function Component(props: UseTaskWithRQProps) {
   const { isLoading, data, isDetailOpen, selectedId, editingState } = useTaskWithRq(
@@ -25,13 +31,28 @@ function Component(props: UseTaskWithRQProps) {
             {data?.map((item) => (
               <Flex key={item.id.value} w="100%" justifyContent="space-between">
                 <InlineEdit>
-                  <InlineEdit.Uneditable>
+                  <InlineEditUneditable>
+                    <React.Fragment>
+                      <Item.Clickable id={item.id.value}>
+                        <Item.Title title={item.title} />
+                      </Item.Clickable>
+                      <InlineEditHovering>
+                        <div>hoger</div>
+                      </InlineEditHovering>
+                      <Box>
+                        {item.status && (
+                          <Item.Status
+                            title={item.status.title}
+                            color={item.status.color}
+                          />
+                        )}
+                      </Box>
+                    </React.Fragment>
+                  </InlineEditUneditable>
+                  <InlineEditEditable>
                     <Item.Clickable id={item.id.value}>
                       <Item.Title title={item.title} />
                     </Item.Clickable>
-                    <InlineEdit.Hovering>
-                      <div>hoger</div>
-                    </InlineEdit.Hovering>
                     <Box>
                       {item.status && (
                         <Item.Status
@@ -40,20 +61,7 @@ function Component(props: UseTaskWithRQProps) {
                         />
                       )}
                     </Box>
-                  </InlineEdit.Uneditable>
-                  <InlineEdit.Editable>
-                    <Item.Clickable id={item.id.value}>
-                      <Item.Title title={item.title} />
-                    </Item.Clickable>
-                    <Box>
-                      {item.status && (
-                        <Item.Status
-                          title={item.status.title}
-                          color={item.status.color}
-                        />
-                      )}
-                    </Box>
-                  </InlineEdit.Editable>
+                  </InlineEditEditable>
                 </InlineEdit>
               </Flex>
             ))}
