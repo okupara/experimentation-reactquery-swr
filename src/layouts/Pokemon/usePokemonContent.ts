@@ -10,18 +10,21 @@ const delay = (ms: number) => new Promise((res) => setTimeout(res, ms))
 export const usePokemonContent = ({ searchWord }: UsePokemonContentProps) => {
   const { isLoading, isError, data, error } = useQuery(
     ["pokemonContent", searchWord],
-    () =>
-      delay(2000)
-        .then(() => fetch(`https://pokeapi.co/api/v2/pokemon/${searchWord}`))
-        .then((res) => {
-          if (!res.ok) {
-            throw `${res.status}`
-          }
-          return res.json()
-        })
-        .then((json) => PokemonModel.fromJson(json)),
+    async () => {
+      await delay(2000)
+      const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${searchWord}`)
+      if (!res.ok) {
+        throw `${res.status}`
+      }
+      const jsonObj = await res.json()
+      return PokemonModel.fromJson(jsonObj)
+    },
     {
+      //   staleTime: 1000,
+      //   cacheTime: 3000,
       retry: 0,
+      //   refetchOnWindowFocus: true,
+      //   staleTime: Infinity,
       //   cacheTime: 0, // cacheなし
     },
   )
