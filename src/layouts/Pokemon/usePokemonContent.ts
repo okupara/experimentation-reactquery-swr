@@ -25,7 +25,7 @@ export const usePokemonContent = ({ searchWord }: UsePokemonContentProps) => {
       retry: 0,
       //   refetchOnWindowFocus: true,
       //   staleTime: Infinity,
-      //   cacheTime: 0, // cacheなし
+      cacheTime: 0, // cacheなし
     },
   )
   console.log("debug", data)

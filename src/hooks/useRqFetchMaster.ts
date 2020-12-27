@@ -6,11 +6,17 @@ type UseRqFetchMasterProps = {
   url: string
 }
 
+const delay = (ms) => new Promise((res) => setTimeout(res, ms))
+
 export function useRqFetchMaster<T extends { id: string }>(
   props: UseRqFetchMasterProps,
 ) {
-  const { isLoading, data } = useQuery<readonly T[]>(props.cacheKey, () =>
-    fetch(props.url).then((r) => r.json()),
+  const { isLoading, data } = useQuery<readonly T[]>(
+    props.cacheKey,
+    () => delay(2000).then(() => fetch(props.url).then((r) => r.json())),
+    {
+      refetchOnWindowFocus: false,
+    },
   )
 
   const idIndexMap: Record<string, number> | null = data
