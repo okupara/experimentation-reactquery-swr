@@ -1,7 +1,7 @@
 import * as React from "react"
+import { useQueryClient } from "react-query"
 import { Text, Flex } from "@chakra-ui/core"
 import { BadgeBox } from "../../components/BadgeBox"
-import { preFetch } from "./useTaskDetail"
 import { useRouter } from "next/router"
 
 type TitleComponentProps = {
@@ -39,9 +39,7 @@ function ClickableComponent({ id, children }: InteractiveAreaComponentProps) {
   const onClick = React.useCallback(() => {
     router.push(`/rq/?id=${id}`)
   }, [])
-  const onMouseEnter = React.useCallback(() => {
-    preFetch(id)
-  }, [])
+  const onMouseEnter = React.useCallback(() => {}, [])
   return (
     <Flex
       alignItems="center"

@@ -1,12 +1,12 @@
 import { useCallback } from "react"
-import { useRqFetchMaster, prefetchMaster } from "./useRqFetchMaster"
+import { useRqFetchMaster, usePrefetchMaster } from "./useRqFetchMaster"
 import { JSONModel } from "../models/User"
 
 const CACHE_KEY = "users"
 const URL = "http://localhost:5001/users"
 
-export function prefetchUsers() {
-  prefetchMaster({
+export function usePrefetchUsers() {
+  return usePrefetchMaster({
     cacheKey: CACHE_KEY,
     url: URL,
     staleTime: 20000,

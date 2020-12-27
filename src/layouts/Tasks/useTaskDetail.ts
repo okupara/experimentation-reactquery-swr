@@ -1,22 +1,14 @@
 import * as React from "react"
-import { useQuery, queryCache } from "react-query"
+import { useQuery, QueryClient, useQueryClient } from "react-query"
 import * as Task from "../../models/Task"
 import * as User from "../../models/User"
 import * as Status from "../../models/Status"
-import { useFetchUsers, prefetchUsers } from "../../hooks/useRqUser"
-import { useFetchStatuses, prefetchStatuses } from "../../hooks/useRqStatuses"
+import { useFetchUsers, usePrefetchUsers } from "../../hooks/useRqUser"
+import { useFetchStatuses, usePrefetchStatuses } from "../../hooks/useRqStatuses"
 
 export type TaskDetailUser = Pick<User.Model, "id" | "name">
 export type TaskDetail = Task.Model<TaskDetailUser, Status.Model>
 
-export function preFetch(id: string) {
-  prefetchUsers()
-  prefetchStatuses()
-  const result = createFetchTaskDetail(id)
-  queryCache.prefetchQuery(result.key, result.fetcher, {
-    staleTime: 10000,
-  })
-}
 const createFetchTaskDetail = (id: string) => ({
   key: ["task", id],
   fetcher: () =>
@@ -56,4 +48,18 @@ export function useTaskDetail(id: string) {
   }, [taskQueryInfo.data, userData, statusData])
 
   return { ...taskQueryInfo, taskDetail }
+}
+
+export const usePrefetch = () => {
+  const client = useQueryClient()
+  const { prefetch: prefetchUsers } = usePrefetchUsers()
+  const { prefetch: prefetchStatuses } = usePrefetchStatuses()
+
+  const prefetch = React.useCallback((id: string) => {
+    prefetchUsers()
+    prefetchStatuses()
+    const taskDetail = createFetchTaskDetail(id)
+    client.prefetchQuery(taskDetail.key, taskDetail.fetcher)
+  }, [])
+  return { prefetch }
 }

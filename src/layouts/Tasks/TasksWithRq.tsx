@@ -2,7 +2,7 @@ import * as React from "react"
 import { VStack, Text, Box, Flex, Badge } from "@chakra-ui/core"
 import { Header } from "../../components/Header"
 import { useTaskWithRq, UseTaskWithRQProps } from "./useTasksWithRq"
-import { preFetch } from "./useTaskDetail"
+import { usePrefetch } from "./useTaskDetail"
 import { BadgeBox } from "../../components/BadgeBox"
 import { TaskDrawer } from "../../layouts/Tasks/TaskDrawer"
 import { TaskDetail } from "../../layouts/Tasks/TaskDetail"
@@ -78,8 +78,9 @@ const Row: React.FC<RowProps> = ({ id, children }) => {
   const onClick = React.useCallback(() => {
     router.push(`/rq/?id=${id}`)
   }, [])
+  const { prefetch } = usePrefetch()
   const onMouseEnter = React.useCallback(() => {
-    // preFetch(id)
+    // prefetch(id)
   }, [])
   return (
     <ClickableFlex onMouseEnter={onMouseEnter} onClick={onClick}>
