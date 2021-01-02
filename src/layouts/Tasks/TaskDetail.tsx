@@ -1,6 +1,6 @@
 import * as React from "react"
 import { useTaskDetail } from "./useTaskDetail"
-import { Box, Text, VStack, Flex } from "@chakra-ui/core"
+import { Box, Text, VStack, Flex } from "@chakra-ui/react"
 import { BadgeBox } from "../../components/BadgeBox"
 import { Button } from "@chakra-ui/button"
 

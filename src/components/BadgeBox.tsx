@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Box } from "@chakra-ui/core"
+import { Box } from "@chakra-ui/react"
 import { chakra, PropsOf, color } from "@chakra-ui/system"
 
 type Props = PropsOf<typeof chakra.div> & {

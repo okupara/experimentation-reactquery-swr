@@ -11,13 +11,12 @@
     "reset:db": "NODE_ENV=test node ./scripts/reset-data.js"
   },
   "dependencies": {
-    "@chakra-ui/core": "^1.0.0-rc.5",
-    "@chakra-ui/hooks": "^1.0.0-rc.5",
-    "@chakra-ui/icons": "^1.0.0-rc.5",
-    "@chakra-ui/theme": "^1.0.0-rc.5",
-    "@chakra-ui/theme-tools": "^1.0.0-rc.5",
-    "@chakra-ui/utils": "^1.0.0-rc.5",
+    "@chakra-ui/react": "^1.1.0",
+    "@emotion/react": "^11.1.4",
+    "@emotion/styled": "^11.0.0",
     "fp-ts": "^2.8.2",
+    "framer-motion": "^3.1.1",
+    "memoize-one": "^5.1.1",
     "next": "^10.0.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

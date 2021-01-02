@@ -1,6 +1,6 @@
 import * as React from "react"
 import { useQueryClient } from "react-query"
-import { Text, Flex } from "@chakra-ui/core"
+import { Text, Flex } from "@chakra-ui/react"
 import { BadgeBox } from "../../components/BadgeBox"
 import { useRouter } from "next/router"
 

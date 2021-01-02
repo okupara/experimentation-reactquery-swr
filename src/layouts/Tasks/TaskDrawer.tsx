@@ -4,7 +4,7 @@ import {
   DrawerContent,
   DrawerBody,
   DrawerCloseButton,
-} from "@chakra-ui/drawer"
+} from "@chakra-ui/react"
 import { useRouter } from "next/router"
 
 type Props = {

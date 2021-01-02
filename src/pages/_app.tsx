@@ -1,5 +1,5 @@
 import { useRef } from "react"
-import { ChakraProvider } from "@chakra-ui/core"
+import { ChakraProvider } from "@chakra-ui/react"
 import theme from "@chakra-ui/theme"
 import { ReactQueryDevtools } from "react-query-devtools"
 import type { AppProps } from "next/app"

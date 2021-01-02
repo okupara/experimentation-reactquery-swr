@@ -1,6 +1,6 @@
 import * as React from "react"
 import { PokemonContent, PokemonSearchForm } from "../layouts/Pokemon"
-import { Box, Flex, Text } from "@chakra-ui/core"
+import { Box, Flex, Text } from "@chakra-ui/react"
 
 const Hello = () => {
   const [searchWord, setSearchWord] = React.useState("")

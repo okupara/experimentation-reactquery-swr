@@ -3,7 +3,7 @@ interface ReactQueryPromise extends Promise<Response> {
   cancel?: () => void
 }
 
-export const cancelableFetch: FetchType = <T extends any>(url, option) => {
+export const cancelableFetch: FetchType = <T extends any>(url: any, option: any) => {
   const controller = new AbortController()
   const signal = controller.signal
   const newOption: typeof option = { ...option, signal }

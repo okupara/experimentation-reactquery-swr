@@ -1,5 +1,5 @@
 import * as React from "react"
-import { VStack, Text, Box, Flex, Badge } from "@chakra-ui/core"
+import { VStack, Text, Box, Flex } from "@chakra-ui/react"
 import { Header } from "../../components/Header"
 import { useTaskWithRq, UseTaskWithRQProps } from "./useTasksWithRq"
 import { usePrefetch } from "./useTaskDetail"
